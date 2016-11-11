@@ -1,0 +1,16 @@
+{application, erlpaystack,
+ [{description, "An Erlang wrapper for PayStack API"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib,
+    inets,
+    ssl
+   ]},
+  {env,[]},
+  {modules, [erlpaystack]},
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
