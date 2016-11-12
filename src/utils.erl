@@ -1,5 +1,5 @@
 -module (utils).
--export ([generateMap/2, post/4, get/3, generateQueryStr/2]).
+-export ([generateMap/2, post/4, put/4, get/3, generateQueryStr/2]).
 
 generateMap(InitMap, []) -> InitMap;
 
@@ -21,6 +21,11 @@ post(SecretKey, Url, BodyMap, Options) ->
 	CompleteBodyMap = utils:generateMap(BodyMap, Options),
 	BodyStr = binary_to_list(jsx:encode(CompleteBodyMap)),
 	httpc_wrapper:postUrl(SecretKey, Url, BodyStr).	
+
+put(SecretKey, Url, BodyMap, Options) ->
+	CompleteBodyMap = utils:generateMap(BodyMap, Options),
+	BodyStr = binary_to_list(jsx:encode(CompleteBodyMap)),
+	httpc_wrapper:putUrl(SecretKey, Url, BodyStr).	
 
 get(SecretKey, Url, Options) ->
 	QueryUrl = Url ++ utils:generateQueryStr([], Options),
