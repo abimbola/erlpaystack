@@ -1,45 +1,32 @@
 -module (erlpaystack).
 
--export ([initialize/4, verify/2]).
+-export ([initialize/4, verify/2, fetch_transaction/2]).
 -define (InitUrl, "https://api.paystack.co/transaction/initialize").
 -define (VerifyUrl, "https://api.paystack.co/transaction/verify").
+-define (FetchTransUrl, "https://api.paystack.co/transaction").
 
--spec initialize(SecretKey::string(), Reference::string(), Amount::string(), Email::string()) -> {ok, term()} | {error, term()}.
--spec verify(SecretKey::string(), Reference::string()) -> {ok, term()} | {error, term()}.
+-type apioption()::{string(), string()|integer()|boolean()|map()}.
+-type apioptions()::[apioption()]|[].
+-spec initialize(SecretKey::string(), Amount::integer(), Email::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
+-spec verify(SecretKey::string(), Reference::string()) -> {ok, map()} | {error, term()}.
+-spec fetch_transaction(SecretKey::string(), Id::integer()) -> {ok, map()} | {error, term()}.
 
 
 
-initialize(SecretKey, Reference, Amount, Email) ->
-	%%Url = "https://api.paystack.co/transaction/initialize",
-	AuthHeader = {"Authorization", "Bearer " ++ SecretKey},
-	ApplicationTypeHeader = "application/json",
-	BodyMap = #{<<"reference">> => list_to_binary(Reference), <<"amount">> => list_to_binary(Amount), <<"email">> => list_to_binary(Email)},
-	BodyStr = binary_to_list(jsx:encode(BodyMap)),
-	Response = httpc:request(post, {?InitUrl, [AuthHeader], ApplicationTypeHeader, BodyStr}, [],[]),
-	case Response of
-		{ok, Result} ->
-			case Result of
-				{{_HttpVersion, 200, _Reason}, _Header, Body} ->
-					{ok, jsx:decode(list_to_binary(Body), [return_maps])};
-				Error ->
-					{error, Error}
-			end;
-		{error, Reason} ->
-			{error, Reason}
-	end.
+initialize(SecretKey, Amount, Email, Options) ->
+	Url = ?InitUrl,
+	BodyMap = #{<<"amount">> => Amount, <<"email">> => list_to_binary(Email)},
+	CompleteBodyMap = utils:generateMap(BodyMap, Options),
+	BodyStr = binary_to_list(jsx:encode(CompleteBodyMap)),
+	httpc_wrapper:postUrl(SecretKey, Url, BodyStr).	
 
 verify(SecretKey, Reference) ->
 	Url = ?VerifyUrl ++ "/" ++ Reference,
-	AuthHeader = {"Authorization", "Bearer " ++ SecretKey},
-	Response = httpc:request(get, {Url, [AuthHeader]}, [],[]),
-	case Response of
-		{ok, Result} ->
-			case Result of
-				{{_HttpVersion, 200, _Reason}, _Header, Body} ->
-					{ok, jsx:decode(list_to_binary(Body), [return_maps])};
-				Error ->
-					{error, Error}
-			end;
-		{error, Reason} ->
-			{error, Reason}
-	end.
+	httpc_wrapper:getUrl(SecretKey, Url).
+
+fetch_transaction(SecretKey, Id) ->
+	Url = ?FetchTransUrl ++ "/" ++ integer_to_list(Id),
+	httpc_wrapper:getUrl(SecretKey, Url).
+
+
+	

@@ -9,7 +9,7 @@
     ssl
    ]},
   {env,[]},
-  {modules, [erlpaystack]},
+  {modules, [erlpaystack, httpc_wrapper, utils]},
   {maintainers, []},
   {licenses, []},
   {links, []}
