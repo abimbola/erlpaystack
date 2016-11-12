@@ -95,7 +95,7 @@ fetch_customer(SecretKey, Id) ->
 	utils:get(SecretKey, Url, []).
 
 white_black_list_customer(SecretKey, Customer, Options) ->
-	Url = ?CustomerUrl,
+	Url = ?WhiteBlackCustomerUrl,
 	BodyMap = #{<<"customer">> => list_to_binary(Customer)},
 	utils:post(SecretKey, Url, BodyMap, Options).
 
