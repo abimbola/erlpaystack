@@ -4,6 +4,8 @@
 
 -export ([create_customer/3, list_customers/2, fetch_customer/2, update_customer/3, white_black_list_customer/3]).
 
+-export ([create_plan/5, list_plans/2, fetch_plan/2, update_plan/3]).
+
 -define (InitUrl, "https://api.paystack.co/transaction/initialize").
 -define (VerifyUrl, "https://api.paystack.co/transaction/verify").
 -define (FetchTransUrl, "https://api.paystack.co/transaction").
@@ -18,6 +20,7 @@
 -define (WhiteBlackCustomerUrl, "https://api.paystack.co/customer/set_risk_action
 ").
 
+-define (PlanUrl, "https://api.paystack.co/plan").
 
 -type apioption()::{string(), string()|integer()|boolean()|map()}.
 -type queryapioption()::{string(), string()|integer()|boolean()}.
@@ -38,6 +41,11 @@
 -spec fetch_customer(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
 -spec white_black_list_customer(SecretKey::string(), Customer::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
 -spec update_customer(SecretKey::string(), Customer::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
+
+-spec create_plan(SecretKey::string(), Name::string(), Amount::integer(), Interval::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
+-spec list_plans(SecretKey::string(), QueryOptions::queryapioptions()) -> {ok, map()} | {error, term()}.
+-spec fetch_plan(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
+-spec update_plan(SecretKey::string(), Id::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
 
 
 initialize(SecretKey, Amount, Email, Options) ->
@@ -104,8 +112,22 @@ update_customer(SecretKey ,Customer, Options) ->
 	BodyMap = #{},
 	utils:put(SecretKey, Url, BodyMap, Options).
 
+%%Plans API
 
+create_plan(SecretKey, Name, Amount, Interval, Options) ->
+	Url = ?PlanUrl,
+	BodyMap = #{<<"name">> => list_to_binary(Name), <<"amount">> => Amount, <<"interval">> => list_to_binary(Interval)},
+	utils:post(SecretKey, Url, BodyMap, Options).
 
+list_plans(SecretKey, QueryOptions) ->
+	Url = ?PlanUrl,
+	utils:get(SecretKey, Url, QueryOptions). 
 
+fetch_plan(SecretKey, Id) ->
+	Url = ?PlanUrl ++ "/" ++ Id,
+	utils:get(SecretKey, Url, []).
 
-
+update_plan(SecretKey ,Id, Options) ->
+	Url = ?PlanUrl ++ "/" ++ Id,
+	BodyMap = #{},
+	utils:put(SecretKey, Url, BodyMap, Options).

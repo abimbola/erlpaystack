@@ -25,6 +25,12 @@ postUrl(SecretKey, Url, BodyStr) ->
 			case Result of
 				{{_HttpVersion, 200, _Reason}, _Header, Body} ->
 					{ok, jsx:decode(list_to_binary(Body), [return_maps])};
+				{{_HttpVersion, 201, _Reason}, _Header, Body} ->
+					{ok, jsx:decode(list_to_binary(Body), [return_maps])};
+				{{_HttpVersion, StatusCode, Reason}, _Header, Body} ->
+					{error, {StatusCode, Reason, Body}};	
+				{StatusCode, Body} ->
+					{error, {StatusCode, Body}};
 				Error ->
 					{error, Error}
 			end;
@@ -41,6 +47,12 @@ putUrl(SecretKey, Url, BodyStr) ->
 			case Result of
 				{{_HttpVersion, 200, _Reason}, _Header, Body} ->
 					{ok, jsx:decode(list_to_binary(Body), [return_maps])};
+				{{_HttpVersion, 201, _Reason}, _Header, Body} ->
+					{ok, jsx:decode(list_to_binary(Body), [return_maps])};
+				{{_HttpVersion, StatusCode, Reason}, _Header, Body} ->
+					{error, {StatusCode, Reason, Body}};	
+				{StatusCode, Body} ->
+					{error, {StatusCode, Body}};
 				Error ->
 					{error, Error}
 			end;
