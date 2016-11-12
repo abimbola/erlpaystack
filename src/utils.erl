@@ -33,7 +33,15 @@ generateQueryStr([], OptList) ->
 	[Opt|RemList] = OptList,
 	{Key, Value} = Opt,
 	IntValueBool = is_integer(Value),
+	BoolValueBool = is_boolean(Value),
 	if
+		BoolValueBool ->
+			if
+				Value ->
+					NValue = "true";
+				true ->
+					NValue = "false"
+			end;
 		IntValueBool ->
 			NValue = integer_to_list(Value);
 		true ->
@@ -46,7 +54,15 @@ generateQueryStr(InitStr,OptList) ->
 	[Opt|RemList] = OptList,
 	{Key, Value} = Opt,
 	IntValueBool = is_integer(Value),
+	BoolValueBool = is_boolean(Value),
 	if
+		BoolValueBool ->
+			if
+				Value ->
+					NValue = "true";
+				true ->
+					NValue = "false"
+			end;
 		IntValueBool ->
 			NValue = integer_to_list(Value);
 		true ->
