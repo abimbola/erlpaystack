@@ -1,3 +1,4 @@
+%%@hidden
 -module (httpc_wrapper).
 -export ([getUrl/2, postUrl/3, putUrl/3]).
 

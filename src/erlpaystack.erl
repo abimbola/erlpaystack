@@ -64,11 +64,13 @@ verify(SecretKey, Reference) ->
 	Url = ?VerifyUrl ++ "/" ++ Reference,
 	utils:get(SecretKey, Url, []).
 
+
 -spec fetch_transaction(SecretKey::string(), Id::integer()) -> {ok, map()} | {error, term()}.
 
 fetch_transaction(SecretKey, Id) ->
 	Url = ?TransUrl ++ "/" ++ integer_to_list(Id),
 	utils:get(SecretKey, Url, []). 
+
 
 -spec charge_token(SecretKey::string(), Token::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
 
@@ -77,12 +79,14 @@ charge_token(SecretKey, Token, Options) ->
 	BodyMap = #{<<"token">> => list_to_binary(Token)},
 	utils:post(SecretKey, Url, BodyMap, Options).
 
+
 -spec charge_authorization(SecretKey::string(), AuthorizationCode::string(), Amount::integer(), Email::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
 
 charge_authorization(SecretKey, AuthorizationCode, Amount, Email, Options) ->
 	Url = ?ChargeAuthUrl,
 	BodyMap = #{<<"authorization_code">> => AuthorizationCode, <<"amount">> => Amount, <<"email">> => list_to_binary(Email)},
 	utils:post(SecretKey, Url, BodyMap, Options).
+
 
 -spec list_transactions(SecretKey::string(), QueryOptions::queryapioptions()) -> {ok, map()} | {error, term()}.
 

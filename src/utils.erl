@@ -1,3 +1,4 @@
+%%@hidden
 -module (utils).
 -export ([generateMap/2, post/4, put/4, get/3, generateQueryStr/2]).
 
