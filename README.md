@@ -212,7 +212,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>fetch_customer(SecretKey::string(), Id::string()) -> {ok, #{}} | {error, term()}</tt>
+<tt>fetch_customer(SecretKey::string(), IdOrCode::string()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -220,7 +220,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>fetch_page(SecretKey::string(), Id::string()) -> {ok, #{}} | {error, term()}</tt>
+<tt>fetch_page(SecretKey::string(), IdOrSlug::string()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -228,7 +228,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>fetch_plan(SecretKey::string(), Id::string()) -> {ok, #{}} | {error, term()}</tt>
+<tt>fetch_plan(SecretKey::string(), IdOrCode::string()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -244,7 +244,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>fetch_subaccount(SecretKey::string(), Id::string()) -> {ok, #{}} | {error, term()}</tt>
+<tt>fetch_subaccount(SecretKey::string(), IdOrSlug::string()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -252,7 +252,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>fetch_subscription(SecretKey::string(), Id::string()) -> {ok, #{}} | {error, term()}</tt>
+<tt>fetch_subscription(SecretKey::string(), IdOrCode::string()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -348,7 +348,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>update_customer(SecretKey::string(), Customer::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
+<tt>update_customer(SecretKey::string(), IdOrCode::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -356,7 +356,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>update_page(SecretKey::string(), Id::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
+<tt>update_page(SecretKey::string(), IdOrSlug::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -364,7 +364,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>update_plan(SecretKey::string(), Id::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
+<tt>update_plan(SecretKey::string(), IdOrCode::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -372,7 +372,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>update_subaccount(SecretKey::string(), Id::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
+<tt>update_subaccount(SecretKey::string(), IdOrSlug::string(), Options::apioptions()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 
@@ -388,7 +388,7 @@ An Erlang implementation of PayStack Rest API
 
 <div class="spec">
 
-<tt>view_transaction_timeline(SecretKey::string(), Reference::string()) -> {ok, #{}} | {error, term()}</tt>
+<tt>view_transaction_timeline(SecretKey::string(), IdOrReference::string()) -> {ok, #{}} | {error, term()}</tt>
 
 </div>
 

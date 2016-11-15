@@ -94,10 +94,10 @@ list_transactions(SecretKey, QueryOptions) ->
 	Url = ?TransUrl,
 	utils:get(SecretKey, Url, QueryOptions). 
 
--spec view_transaction_timeline(SecretKey::string(), Reference::string()) -> {ok, map()} | {error, term()}.
+-spec view_transaction_timeline(SecretKey::string(), IdOrReference::string()) -> {ok, map()} | {error, term()}.
 
-view_transaction_timeline(SecretKey, Reference) ->
-	Url = ?ViewTransTimeLineUrl ++ "/" ++ Reference,
+view_transaction_timeline(SecretKey, IdOrReference) ->
+	Url = ?ViewTransTimeLineUrl ++ "/" ++ IdOrReference,
 	utils:get(SecretKey, Url, []).
 
 -spec transaction_totals(SecretKey::string(), QueryOptions::queryapioptions()) -> {ok, map()} | {error, term()}.
@@ -125,10 +125,10 @@ list_customers(SecretKey, QueryOptions) ->
 	Url = ?CustomerUrl,
 	utils:get(SecretKey, Url, QueryOptions). 
 
--spec fetch_customer(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
+-spec fetch_customer(SecretKey::string(), IdOrCode::string()) -> {ok, map()} | {error, term()}.
 
-fetch_customer(SecretKey, Id) ->
-	Url = ?CustomerUrl ++ "/" ++ Id,
+fetch_customer(SecretKey, IdOrCode) ->
+	Url = ?CustomerUrl ++ "/" ++ IdOrCode,
 	utils:get(SecretKey, Url, []).
 
 -spec white_black_list_customer(SecretKey::string(), Customer::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
@@ -138,10 +138,10 @@ white_black_list_customer(SecretKey, Customer, Options) ->
 	BodyMap = #{<<"customer">> => list_to_binary(Customer)},
 	utils:post(SecretKey, Url, BodyMap, Options).
 
--spec update_customer(SecretKey::string(), Customer::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.	
+-spec update_customer(SecretKey::string(), IdOrCode::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.	
 
-update_customer(SecretKey ,Customer, Options) ->
-	Url = ?CustomerUrl ++ "/" ++ Customer,
+update_customer(SecretKey ,IdOrCode, Options) ->
+	Url = ?CustomerUrl ++ "/" ++ IdOrCode,
 	BodyMap = #{},
 	utils:put(SecretKey, Url, BodyMap, Options).
 
@@ -159,15 +159,16 @@ list_plans(SecretKey, QueryOptions) ->
 	Url = ?PlanUrl,
 	utils:get(SecretKey, Url, QueryOptions). 
 
--spec fetch_plan(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
+-spec fetch_plan(SecretKey::string(), IdOrCode::string()) -> {ok, map()} | {error, term()}.
 
-fetch_plan(SecretKey, Id) ->
-	Url = ?PlanUrl ++ "/" ++ Id,
+fetch_plan(SecretKey, IdOrCode) ->
+	Url = ?PlanUrl ++ "/" ++ IdOrCode,
 	utils:get(SecretKey, Url, []).
 
--spec update_plan(SecretKey::string(), Id::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
-update_plan(SecretKey ,Id, Options) ->
-	Url = ?PlanUrl ++ "/" ++ Id,
+-spec update_plan(SecretKey::string(), IdOrCode::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
+
+update_plan(SecretKey ,IdOrCode, Options) ->
+	Url = ?PlanUrl ++ "/" ++ IdOrCode,
 	BodyMap = #{},
 	utils:put(SecretKey, Url, BodyMap, Options).
 
@@ -199,10 +200,10 @@ enable_subscription(SecretKey, Code, Token) ->
 	BodyMap = #{<<"code">> => list_to_binary(Code), <<"token">> => list_to_binary(Token)},
 	utils:post(SecretKey, Url, BodyMap, []).
 
--spec fetch_subscription(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
+-spec fetch_subscription(SecretKey::string(), IdOrCode::string()) -> {ok, map()} | {error, term()}.
 
-fetch_subscription(SecretKey, Id) ->
-	Url = ?SubscriptionUrl ++ "/" ++ Id,
+fetch_subscription(SecretKey, IdOrCode) ->
+	Url = ?SubscriptionUrl ++ "/" ++ IdOrCode,
 	utils:get(SecretKey, Url, []).
 
 %% Pages API
@@ -219,16 +220,16 @@ list_pages(SecretKey, QueryOptions) ->
 	Url = ?PageUrl,
 	utils:get(SecretKey, Url, QueryOptions). 
 
--spec fetch_page(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
+-spec fetch_page(SecretKey::string(), IdOrSlug::string()) -> {ok, map()} | {error, term()}.
 
-fetch_page(SecretKey, Id) ->
-	Url = ?PageUrl ++ "/" ++ Id,
+fetch_page(SecretKey, IdOrSlug) ->
+	Url = ?PageUrl ++ "/" ++ IdOrSlug,
 	utils:get(SecretKey, Url, []).
 
--spec update_page(SecretKey::string() ,Id::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
+-spec update_page(SecretKey::string() ,IdOrSlug::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
 
-update_page(SecretKey ,Id, Options) ->
-	Url = ?PageUrl ++ "/" ++ Id,
+update_page(SecretKey ,IdOrSlug, Options) ->
+	Url = ?PageUrl ++ "/" ++ IdOrSlug,
 	BodyMap = #{},
 	utils:put(SecretKey, Url, BodyMap, Options).
 
@@ -252,16 +253,16 @@ list_subaccounts(SecretKey, QueryOptions) ->
 	Url = ?SubaccountUrl,
 	utils:get(SecretKey, Url, QueryOptions). 
 
--spec fetch_subaccount(SecretKey::string(), Id::string()) -> {ok, map()} | {error, term()}.
+-spec fetch_subaccount(SecretKey::string(), IdOrSlug::string()) -> {ok, map()} | {error, term()}.
 
-fetch_subaccount(SecretKey, Id) ->
-	Url = ?SubaccountUrl ++ "/" ++ Id,
+fetch_subaccount(SecretKey, IdOrSlug) ->
+	Url = ?SubaccountUrl ++ "/" ++ IdOrSlug,
 	utils:get(SecretKey, Url, []).
 
--spec update_subaccount(SecretKey::string() ,Id::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
+-spec update_subaccount(SecretKey::string() ,IdOrSlug::string(), Options::apioptions()) -> {ok, map()} | {error, term()}.
 
-update_subaccount(SecretKey ,Id, Options) ->
-	Url = ?SubaccountUrl ++ "/" ++ Id,
+update_subaccount(SecretKey ,IdOrSlug, Options) ->
+	Url = ?SubaccountUrl ++ "/" ++ IdOrSlug,
 	BodyMap = #{},
 	utils:put(SecretKey, Url, BodyMap, Options).
 
