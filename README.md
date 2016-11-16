@@ -3,23 +3,38 @@
 
 An Erlang implementation of PayStack Rest API
 
-*   [Build](#build)
-*   [Examples](#examples)
+*   [Quickstart](#quickstart)
 *   [Data Types](#types)
 *   [Function Index](#index)
 *   [Function Details](#functions)
 
-## <a name="build">Build</a>
+
+
+## <a name="quickstart">Quickstart</a>
+
+### to add to a rebar3 project
+Add to `rebar.config`
+```erlang
+...
+{erl_opts, [debug_info]}.
+{deps, [
+       ...
+       {erlpaystack, {git, "https://github.com/abimbola/erlpaystack.git", {branch, "v1.0.0"}}}
+]}.
+...
+```
+
+### <a name="build">Build</a>
 
     $ rebar3 compile
 
-## <a name="examples">Examples</a>
+### <a name="examples">Examples</a>
 
-### Ensure that dependencies are started - inets, ssl
+#### Ensure that dependencies are started - inets, ssl
 	1> application:ensure_all_started(erlpaystack).
 	{ok,[inets,crypto,asn1,public_key,ssl,erlpaystack]}
 
-### Intialize transaction with only mandatory parameters
+#### Intialize transaction with only mandatory parameters
 
 	2> erlpaystack:initialize("A_Secret_Key_A_Secret_Key", 50000, "abimbola.adegun@gmail.com", []).
 	{ok,#{<<"data">> => #{<<"access_code">> => <<"h5tm6epimb">>,
@@ -28,7 +43,7 @@ An Erlang implementation of PayStack Rest API
       	<<"message">> => <<"Authorization URL created">>,
       	<<"status">> => true}}
 
-### Intialize transaction with mandatory parameters and one optional parameter
+#### Intialize transaction with mandatory parameters and one optional parameter
 
 	3> erlpaystack:initialize("A_Secret_Key_A_Secret_Key", 50000, "abimbola.adegun@gmail.com", 
 	[{"reference", "YTUtrgwkwhsfs47596"}]).
