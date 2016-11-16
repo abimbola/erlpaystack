@@ -19,7 +19,7 @@ Add to `rebar.config`
 {erl_opts, [debug_info]}.
 {deps, [
        ...
-       {erlpaystack, {git, "https://github.com/abimbola/erlpaystack.git", {branch, "v1.0.0"}}}
+       {erlpaystack, {git, "https://github.com/abimbola/erlpaystack.git", {branch, "v1.0.1"}}}
 ]}.
 ...
 ```
